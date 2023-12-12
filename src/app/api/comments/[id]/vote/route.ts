@@ -1,13 +1,18 @@
 import { type NextRequest } from 'next/server';
 
-import {voteCommentSchema, votePostSchema} from '@/server/zod-schema';
+import { voteCommentSchema } from '@/server/zod-schema';
 import { db } from '@/server/db';
 import { getServerAuthSession } from '@/server/auth';
-import { toVotePostPrisma, toVotePostZod } from '@/server/mappers/vote-post-mapper';
 import { toVoteTypePrisma } from '@/server/mappers/vote-type-mapper';
-import {toVoteCommentPrisma, toVoteCommentZod} from "@/server/mappers/vote-comment-mapper";
+import {
+	toVoteCommentPrisma,
+	toVoteCommentZod
+} from '@/server/mappers/vote-comment-mapper';
 
-export const PUT = async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const PUT = async (
+	request: NextRequest,
+	{ params }: { params: { id: string } }
+) => {
 	const session = await getServerAuthSession();
 	const voteType = request.nextUrl.searchParams.get('voteType');
 
@@ -31,7 +36,9 @@ export const PUT = async (request: NextRequest, { params }: { params: { id: stri
 			}
 		});
 
-		return Response.json(voteCommentSchema.parse(toVoteCommentZod(upsertResult)));
+		return Response.json(
+			voteCommentSchema.parse(toVoteCommentZod(upsertResult))
+		);
 	} else {
 		return new Response('', {
 			status: 401
@@ -39,7 +46,10 @@ export const PUT = async (request: NextRequest, { params }: { params: { id: stri
 	}
 };
 
-export const DELETE = async (_: NextRequest, { params }: { params: { id: string } }) => {
+export const DELETE = async (
+	_: NextRequest,
+	{ params }: { params: { id: string } }
+) => {
 	const session = await getServerAuthSession();
 
 	if (session !== null) {

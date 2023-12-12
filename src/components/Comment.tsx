@@ -1,6 +1,6 @@
 'use client';
 
-import { FaArrowUp, FaArrowDown, FaRegComment } from 'react-icons/fa';
+import { FaRegComment } from 'react-icons/fa';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 

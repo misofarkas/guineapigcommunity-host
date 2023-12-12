@@ -1,5 +1,3 @@
-import {getAllTagTypes} from "@/server/mappers/tag-type-mapper";
+import { getAllTagTypes } from '@/server/mappers/tag-type-mapper';
 
-export const GET = async () => {
-    return Response.json(getAllTagTypes());
-};
+export const GET = async () => Response.json(getAllTagTypes());

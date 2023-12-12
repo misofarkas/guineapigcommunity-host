@@ -44,8 +44,9 @@ const Post = ({ post }: { post: DetailedPost }) => {
 					</h1>
 					<p className="mt-2">{post.text}</p>
 					<div className="space-x-2 space-y-2">
-						{post.tags !== undefined &&
-							post.tags?.map(tag => <Tag key={tag} tagName={tag} />)}
+						{post.tags?.map(tag => (
+							<Tag key={tag} tagName={tag} />
+						))}
 					</div>
 				</div>
 				<div className="flex items-center gap-x-12 border-t border-divider px-4 py-2 text-sm text-secondary-text">

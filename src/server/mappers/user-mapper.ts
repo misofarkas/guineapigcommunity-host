@@ -3,7 +3,6 @@ import { type z } from 'zod';
 
 import { type userFormSchema } from '@/server/zod-schema';
 
-
 export const toUserZod = (entity: user) => ({
 	...entity
 });

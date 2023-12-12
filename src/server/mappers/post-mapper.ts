@@ -1,24 +1,26 @@
 import {
 	$Enums,
-	comment,
-	post,
-	user,
-	vote_post,
-	vote_comment
+	type comment,
+	type post,
+	type user,
+	type vote_post,
+	type vote_comment
 } from '.prisma/client';
-import { z } from 'zod';
-import { postFormSchema } from '@/server/zod-schema';
+import { type z } from 'zod';
+
+import { type postFormSchema } from '@/server/zod-schema';
 import { toUserZod } from '@/server/mappers/user-mapper';
 import { toCommentsZodWithParentCommentId } from '@/server/mappers/comment-mapper';
 import {
 	toTagTypesPrisma,
 	toTagTypesZod
 } from '@/server/mappers/tag-type-mapper';
-import { PostMasterPrisma } from '@/server/types';
+import { type PostMasterPrisma } from '@/server/types';
+
 import vote_type = $Enums.vote_type;
 
-export const toPostsMasterZod = (posts: PostMasterPrisma[]) => {
-	return posts.map(post => {
+export const toPostsMasterZod = (posts: PostMasterPrisma[]) =>
+	posts.map(post => {
 		const votes = post.vote_post;
 		const vote = votes.length > 0 ? votes[0] : null;
 
@@ -30,14 +32,11 @@ export const toPostsMasterZod = (posts: PostMasterPrisma[]) => {
 			commentsCount: post.comment.length
 		};
 	});
-};
 
-export const toPostZod = (entity: { user: user } & post) => {
-	return {
-		...toPostZodWithoutUser(entity),
-		createdBy: toUserZod(entity.user)
-	};
-};
+export const toPostZod = (entity: { user: user } & post) => ({
+	...toPostZodWithoutUser(entity),
+	createdBy: toUserZod(entity.user)
+});
 
 export const toPostDetailZod = (
 	entity: {
@@ -56,28 +55,24 @@ export const toPostDetailZod = (
 	return {
 		...toPostZod(entity),
 		comments: toCommentsZodWithParentCommentId(entity.comment),
-		upvoters: upvoters,
-		downvoters: downvoters
+		upvoters,
+		downvoters
 	};
 };
 
-export const toPostZodWithoutUser = (entity: post) => {
-	return {
-		...entity,
-		tags: toTagTypesZod(entity.tags),
-		createdAt: entity.created_at.toString()
-	};
-};
+export const toPostZodWithoutUser = (entity: post) => ({
+	...entity,
+	tags: toTagTypesZod(entity.tags),
+	createdAt: entity.created_at.toString()
+});
 
 export const toPostPrisma = (
 	post: z.infer<typeof postFormSchema>,
 	createdById: number
-) => {
-	return {
-		title: post.title,
-		text: post.text,
-		tags: toTagTypesPrisma(post.tags ?? []),
-		created_by: createdById,
-		image: post.image
-	};
-};
+) => ({
+	title: post.title,
+	text: post.text,
+	tags: toTagTypesPrisma(post.tags ?? []),
+	created_by: createdById,
+	image: post.image
+});

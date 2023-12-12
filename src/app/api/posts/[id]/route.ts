@@ -14,7 +14,10 @@ import {
 } from '@/server/mappers/post-mapper';
 import { getServerAuthSession } from '@/server/auth';
 
-export const PUT = async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const PUT = async (
+	request: NextRequest,
+	{ params }: { params: { id: string } }
+) => {
 	const session = await getServerAuthSession();
 
 	if (session !== null) {
@@ -43,7 +46,10 @@ export const PUT = async (request: NextRequest, { params }: { params: { id: stri
 	}
 };
 
-export const GET = async (_: Request, { params }: { params: { id: string } }) => {
+export const GET = async (
+	_: Request,
+	{ params }: { params: { id: string } }
+) => {
 	const post = await db.post.findFirst({
 		where: {
 			id: +params.id
@@ -60,8 +66,8 @@ export const GET = async (_: Request, { params }: { params: { id: string } }) =>
 				include: {
 					user: true
 				}
-			},
-		},
+			}
+		}
 	});
 
 	if (post === null) {
@@ -71,23 +77,26 @@ export const GET = async (_: Request, { params }: { params: { id: string } }) =>
 	return Response.json(postDetailSchema.parse(toPostDetailZod(post)));
 };
 
-export const DELETE = async (_: NextRequest, { params }: { params: { id: string } }) => {
-    const session = await getServerAuthSession();
+export const DELETE = async (
+	_: NextRequest,
+	{ params }: { params: { id: string } }
+) => {
+	const session = await getServerAuthSession();
 
-    if (session != null) {
-        const createdById = +(session?.user.id ?? -1);
+	if (session !== null) {
+		const createdById = +(session?.user.id ?? -1);
 
-        await db.post.delete({
-            include: {
-                user: true
-            },
-            where: {
-                id: +params.id,
-                user: {
-                    id: createdById
-                }
-            }
-        });
+		await db.post.delete({
+			include: {
+				user: true
+			},
+			where: {
+				id: +params.id,
+				user: {
+					id: createdById
+				}
+			}
+		});
 
 		return Response.json(true);
 	} else {

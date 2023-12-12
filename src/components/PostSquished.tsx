@@ -62,7 +62,7 @@ const PostSquished = ({
 						<p>{formatDate(post.createdAt)}</p>
 					</div>
 					<div className="flex gap-2">
-						{post.tags.map(tag => (
+						{post.tags?.map(tag => (
 							<p
 								key={tag}
 								className=" rounded-full border border-divider bg-secondary-bg p-2 text-primary-accent"
