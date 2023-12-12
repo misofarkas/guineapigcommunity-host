@@ -1,0 +1,841 @@
+{
+	"info": {
+		"_postman_id": "dcdc4b21-3860-4c84-a031-8ba6a72e87fe",
+		"name": "api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15432186",
+		"_collection_link": "https://lunar-crescent-545979.postman.co/workspace/guinea-pig-community~185e3634-2986-435d-bf57-f74ffae7a135/collection/15432186-dcdc4b21-3860-4c84-a031-8ba6a72e87fe?action=share&source=collection_link&creator=15432186"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "[id]",
+					"item": [
+						{
+							"name": "update-",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Cookie",
+										"value": "{{authCookie}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"{{$randomUserName}}\",\r\n    \"image\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}/users/{{userId}}",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-detail",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{local}}/users/1",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete-",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Cookie",
+										"value": "{{authCookie}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{local}}/users/{{userId}}",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "posts",
+			"item": [
+				{
+					"name": "[id]",
+					"item": [
+						{
+							"name": "bookmark",
+							"item": [
+								{
+									"name": "create-",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"pm.collectionVariables.set(\"bookmark\", JSON.stringify(jsonData));\r",
+													"pm.collectionVariables.set(\"bookmarkId\", jsonData.id);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{authCookie}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{local}}/posts/{{postId}}/bookmark",
+											"host": [
+												"{{local}}"
+											],
+											"path": [
+												"posts",
+												"{{postId}}",
+												"bookmark"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete-",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{authCookie}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{local}}/posts/{{postId}}/bookmark",
+											"host": [
+												"{{local}}"
+											],
+											"path": [
+												"posts",
+												"{{postId}}",
+												"bookmark"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "vote",
+							"item": [
+								{
+									"name": "update-",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{authCookie}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"title\": \"{{$randomJobTitle}}\",\r\n    \"text\": \"{{$randomJobDescriptor}}\",\r\n    \"tags\": [\"Pigtures\"]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{local}}/posts/{{postId}}/vote?voteType=upvote",
+											"host": [
+												"{{local}}"
+											],
+											"path": [
+												"posts",
+												"{{postId}}",
+												"vote"
+											],
+											"query": [
+												{
+													"key": "voteType",
+													"value": "upvote"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete-",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{authCookie}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"title\": \"{{$randomJobTitle}}\",\r\n    \"text\": \"{{$randomJobDescriptor}}\",\r\n    \"tags\": [\"Pigtures\"]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{local}}/posts/{{postId}}/vote",
+											"host": [
+												"{{local}}"
+											],
+											"path": [
+												"posts",
+												"{{postId}}",
+												"vote"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "update-",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Cookie",
+										"value": "{{authCookie}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"{{$randomJobTitle}}\",\r\n    \"text\": \"{{$randomJobDescriptor}}\",\r\n    \"tags\": [\"Pigtures\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}/posts/{{postId}}",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"posts",
+										"{{postId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-detail",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{local}}/posts/{{postId}}",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"posts",
+										"{{postId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete-",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Cookie",
+										"value": "{{authCookie}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{local}}/posts/{{postId}}",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"posts",
+										"{{postId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "get-all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "next-auth.csrf-token=63556d686a5ca7f283e25671129d4d22242554467ee190e1d705deaefdfd83ea%7Ce81911d5d07e4639abe28e4668244eb6e9abdc52445698a6be1b17d4f4f03403; next-auth.callback-url=http%3A%2F%2Flocalhost%3A3000; next-auth.session-token=90122518-1ad5-4273-947f-d222cbec0de5",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/posts",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.collectionVariables.set(\"post\", JSON.stringify(jsonData));\r",
+									"pm.collectionVariables.set(\"postId\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{authCookie}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"{{$randomJobTitle}}\",\r\n    \"text\": \"{{$randomJobDescriptor}}\",\r\n    \"tags\": [\"Pigtures\", \"New Pigs on the Block\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/posts",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "comments",
+			"item": [
+				{
+					"name": "[id]",
+					"item": [
+						{
+							"name": "update-",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Cookie",
+										"value": "{{authCookie}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\"updated Comment\"",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}/comments/{{commentId}}",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"comments",
+										"{{commentId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete-",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Cookie",
+										"value": "{{authCookie}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{local}}/comments/{{commentId}}",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"comments",
+										"{{commentId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "create to post-",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.collectionVariables.set(\"comment\", JSON.stringify(jsonData));\r",
+									"pm.collectionVariables.set(\"commentId\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{authCookie}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\": \"{{$randomJobDescriptor}}\",\r\n    \"parentPost\": {{post}},\r\n    \"parentComment\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/comments",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create to comment-",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.collectionVariables.set(\"comment\", JSON.stringify(jsonData));\r",
+									"pm.collectionVariables.set(\"commentId\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{authCookie}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\": \"{{$randomJobDescriptor}}\",\r\n    \"parentPost\": {{post}},\r\n    \"parentComment\": {{comment}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/comments",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tags",
+			"item": [
+				{
+					"name": "get-all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.collectionVariables.set(\"tags\", JSON.stringify(jsonData));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/tags",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tags"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "bookmarks",
+			"item": [
+				{
+					"name": "get-all-for-current-user-",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{authCookie}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/bookmarks",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"bookmarks"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "userId",
+			"value": ""
+		},
+		{
+			"key": "user",
+			"value": ""
+		},
+		{
+			"key": "postId",
+			"value": ""
+		},
+		{
+			"key": "post",
+			"value": ""
+		},
+		{
+			"key": "comment",
+			"value": ""
+		},
+		{
+			"key": "commentId",
+			"value": ""
+		},
+		{
+			"key": "bookmark",
+			"value": ""
+		},
+		{
+			"key": "bookmarkId",
+			"value": ""
+		},
+		{
+			"key": "tags",
+			"value": ""
+		}
+	]
+}

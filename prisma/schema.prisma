@@ -1,0 +1,123 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model bookmark {
+  created_by Int
+  post_id    Int
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  user       user     @relation(fields: [created_by], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  post       post     @relation(fields: [post_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([created_by, post_id])
+}
+
+model comment {
+  id                Int            @id @default(autoincrement())
+  text              String
+  created_at        DateTime       @default(now()) @db.Timestamp(6)
+  created_by        Int
+  parent_post_id    Int
+  parent_comment_id Int?
+  user              user           @relation(fields: [created_by], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  comment           comment?       @relation("commentTocomment", fields: [parent_comment_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  other_comment     comment[]      @relation("commentTocomment")
+  post              post           @relation(fields: [parent_post_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  vote_comment      vote_comment[]
+}
+
+model post {
+  id         Int         @id @default(autoincrement())
+  title      String      @db.VarChar(255)
+  text       String
+  created_at DateTime    @default(now()) @db.Timestamp(6)
+  created_by Int
+  tags       tag_type[]
+  bookmark   bookmark[]
+  comment    comment[]
+  image      String?
+  user       user        @relation(fields: [created_by], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  vote_post  vote_post[]
+}
+
+model vote_post {
+  created_by Int
+  post_id    Int
+  created_at DateTime  @default(now()) @db.Timestamp(6)
+  type       vote_type
+  post       post      @relation(fields: [post_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user       user      @relation(fields: [created_by], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([created_by, post_id])
+}
+
+model vote_comment {
+  created_by Int
+  comment_id Int
+  created_at DateTime  @default(now()) @db.Timestamp(6)
+  type       vote_type
+  comment    comment   @relation(fields: [comment_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user       user      @relation(fields: [created_by], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([created_by, comment_id])
+}
+
+model account {
+  id                Int     @id @default(autoincrement())
+  userId            Int
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? // @db.Text
+  access_token      String? // @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? // @db.Text
+  session_state     String?
+
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model session {
+  id           Int      @id @default(autoincrement())
+  sessionToken String   @unique
+  userId       Int
+  expires      DateTime
+  user         user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model user {
+  id            Int            @id @default(autoincrement())
+  name          String?
+  email         String?        @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      account[]
+  sessions      session[]
+  bookmark      bookmark[]
+  comment       comment[]
+  post          post[]
+  vote_post     vote_post[]
+  vote_comment  vote_comment[]
+}
+
+enum tag_type {
+  Pigtures
+  New_Pigs_on_the_Block @map("New Pigs on the Block")
+  Health___Diet         @map("Health & Diet")
+  Housing
+}
+
+enum vote_type {
+  upvote
+  downvote
+}
