@@ -43,7 +43,7 @@ const PostPreview = ({ post }: { post: MasterPost }) => {
 						</div>
 					)}
 				</Link>
-				<div className="space-x-2 space-y-2">
+				<div className="mt-2 space-x-2 space-y-2">
 					{post.tags?.map(tag => (
 						<Tag key={tag} tagName={tag} />
 					))}

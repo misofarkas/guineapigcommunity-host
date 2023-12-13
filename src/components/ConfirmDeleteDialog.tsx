@@ -28,8 +28,8 @@ const ConfirmDeleteDialog = ({ postId }: { postId: number }) => {
 					}
 				}
 			),
-		onSuccess: () => {
-			console.log('successfully deleted post: ', postId);
+		onSuccess: data => {
+			data.ok && window.location.reload();
 		}
 	});
 

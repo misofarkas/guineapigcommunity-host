@@ -22,7 +22,7 @@ const Comment = ({
 
 	return (
 		<div className="w-full overflow-hidden">
-			<div className="overflow-hidden rounded-lg bg-secondary-bg shadow-md">
+			<div className="rounded-lg bg-secondary-bg shadow-lg">
 				<div className="p-4">
 					{comment.createdBy.name !== undefined && (
 						<div className="text-sm font-semibold uppercase text-secondary-text transition ease-in-out hover:text-primary-accent">
@@ -46,13 +46,13 @@ const Comment = ({
 			</div>
 			{reply && (
 				<Reply
-					post={parentPost}
-					comment={comment}
+					postId={parentPost.id}
+					commentId={comment.id}
 					onHide={() => setReply(false)}
 				/>
 			)}
 			{comment.replies && (
-				<div className="replies mt-4 flex flex-col gap-4 border-l-2 border-gray-600 pl-4">
+				<div className="replies mt-4 flex flex-col gap-4 border-l-2 border-divider pl-4">
 					{comment.replies.map(reply => (
 						<Comment key={reply.id} parentPost={parentPost} comment={reply} />
 					))}

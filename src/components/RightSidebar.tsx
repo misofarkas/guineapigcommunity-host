@@ -5,7 +5,7 @@ import Accordion from './Accordion';
 const RightSidebar = () => (
 	<div>
 		<Link href="/post/new">
-			<button className="text-l w-full rounded-xl bg-primary-accent px-4 py-2 font-semibold text-white">
+			<button className="text-l w-full rounded-xl bg-primary-accent px-4 py-2 font-semibold">
 				Add post
 			</button>
 		</Link>

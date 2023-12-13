@@ -18,7 +18,7 @@ const UploadAvatar = ({
 }) => {
 	const fileInput = useRef<HTMLInputElement>(null);
 	return (
-		<div className="rounded bg-secondary-bg p-2 transition ease-in-out hover:bg-hover-bg">
+		<div className="rounded bg-secondary-accent p-2 transition ease-in-out">
 			<input
 				style={{ display: 'none' }}
 				type="file"

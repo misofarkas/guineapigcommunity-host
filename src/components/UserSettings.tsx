@@ -54,7 +54,7 @@ const UserSettings = ({ user }: { user: User }) => {
 				<UploadAvatar setUpdatedUser={setUpdatedUser} />
 			</div>
 			<button
-				className="w-full rounded bg-secondary-bg p-2 transition ease-in-out hover:bg-hover-bg"
+				className="w-full rounded bg-primary-accent p-2 transition ease-in-out hover:bg-hover-bg"
 				onClick={() => uploadSettingsMutation.mutate()}
 			>
 				{uploadSettingsMutation.isPending

@@ -46,7 +46,8 @@ export const toPostDetailZod = (
 		user: user;
 		comment: ({ user: user; vote_comment: vote_comment[] } & comment)[];
 		vote_post: ({ user: user } & vote_post)[];
-	} & post, userId: number
+	} & post,
+	userId: number
 ) => {
 	const votes = entity.vote_post;
 	const userVote = votes.find(v => v.created_by === userId);

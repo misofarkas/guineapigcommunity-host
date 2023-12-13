@@ -81,20 +81,20 @@ const PostForm = ({ prefilledPost }: { prefilledPost?: Post }) => {
 				onSubmit={methods.handleSubmit(onSubmit)}
 				className="w-full max-w-4xl flex-1 overflow-hidden rounded-lg bg-secondary-bg p-12 shadow-lg"
 			>
-				<h1 className="text-2xl font-semibold text-gray-800 dark:text-white">
+				<h1 className="text-2xl font-semibold text-primary-text">
 					{prefilledPost ? 'Edit a post' : 'Create a new post'}
 				</h1>
 
 				<div className="mb-4">
-					<label htmlFor="title" className="mb-2 block">
+					<label htmlFor="title" className="mb-2 block text-primary-text">
 						Title
 					</label>
 					<input
 						{...methods.register('title')}
-						className="w-full rounded bg-gray-700 p-2 text-white"
+						className="w-full rounded bg-primary-bg p-2 text-secondary-text"
 					/>
 					{methods.formState.errors.title && (
-						<p role="alert" style={{ color: 'red' }}>
+						<p role="alert" className="text-error">
 							{methods.formState.errors.title.message}
 						</p>
 					)}
@@ -107,17 +107,17 @@ const PostForm = ({ prefilledPost }: { prefilledPost?: Post }) => {
 					<textarea
 						{...methods.register('text')}
 						rows={4}
-						className="w-full rounded bg-gray-700 p-2 text-white"
+						className="w-full rounded bg-primary-bg p-2 text-secondary-text"
 					/>
 					{methods.formState.errors.text && (
-						<p role="alert" style={{ color: 'red' }}>
+						<p role="alert" className="text-error">
 							{methods.formState.errors.text.message}
 						</p>
 					)}
 				</div>
 
 				<div className="mb-4">
-					<label htmlFor="tags" className="mb-2 block">
+					<label htmlFor="tags" className="mb-2 block text-primary-text">
 						Tags
 					</label>
 					<div {...methods.register('tags')} className="space-x-2 space-y-2">
@@ -132,7 +132,6 @@ const PostForm = ({ prefilledPost }: { prefilledPost?: Post }) => {
 											activeTags.indexOf(tag) === -1
 												? [...activeTags, tag]
 												: activeTags.filter(activeTag => activeTag !== tag);
-										console.log(newActiveTags);
 										setActiveTags(newActiveTags);
 										methods.setValue('tags', newActiveTags);
 									}
@@ -142,7 +141,7 @@ const PostForm = ({ prefilledPost }: { prefilledPost?: Post }) => {
 					</div>
 				</div>
 
-				<div className="mb-4 rounded bg-secondary-bg transition ease-in-out">
+				<div className="mb-4 rounded bg-primary-bg transition ease-in-out">
 					<input
 						type="file"
 						style={{ display: 'none' }}
@@ -165,7 +164,7 @@ const PostForm = ({ prefilledPost }: { prefilledPost?: Post }) => {
 					/>
 					<button
 						type="button"
-						className="w-full rounded bg-gray-700 px-4 py-2 text-white hover:bg-hover-bg"
+						className="w-full rounded border border-divider bg-secondary-bg px-4 py-2 hover:border-secondary-bg hover:bg-hover-bg"
 						onClick={() => imageInput.current?.click()}
 					>
 						Choose image
@@ -175,7 +174,7 @@ const PostForm = ({ prefilledPost }: { prefilledPost?: Post }) => {
 
 				<button
 					type="submit"
-					className="text-l w-full rounded bg-primary-accent px-4 py-2 text-white"
+					className="text-l w-full rounded bg-primary-accent px-4 py-2"
 				>
 					Submit
 				</button>

@@ -1,6 +1,6 @@
 'use client';
 
-import { FaRegComment, FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import { FaRegComment } from 'react-icons/fa';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -12,6 +12,7 @@ import { type DetailedPost } from '@/utils/types';
 import ReplyButton from './ReplyButton';
 import Tag from './Tag';
 import Reply from './Reply';
+import VoteButtons from './VoteButtons';
 
 const Post = ({ post }: { post: DetailedPost }) => {
 	const { data } = useSession();
@@ -50,11 +51,12 @@ const Post = ({ post }: { post: DetailedPost }) => {
 					</div>
 				</div>
 				<div className="flex items-center gap-x-12 border-t border-divider px-4 py-2 text-sm text-secondary-text">
-					<div className="flex items-center space-x-1">
-						<FaArrowUp className="h-4 w-4 transition ease-in-out hover:text-primary-accent" />
-						<span>{post.upvoters.length - post.downvoters.length}</span>
-						<FaArrowDown className="h-4 w-4 transition ease-in-out hover:text-secondary-accent" />
-					</div>
+					<VoteButtons
+						postId={post.id}
+						voteCount={post.upvoters.length - post.downvoters.length}
+						isUpvoted={post.isUpvoted}
+						isDownvoted={post.isDownvoted}
+					/>
 					<div className="flex items-center gap-1">
 						<FaRegComment />
 						<span>{post.comments.length} comments</span>
@@ -65,7 +67,7 @@ const Post = ({ post }: { post: DetailedPost }) => {
 					</div>
 				</div>
 			</div>
-			{reply && <Reply post={post} onHide={() => setReply(false)} />}
+			{reply && <Reply postId={post.id} onHide={() => setReply(false)} />}
 		</>
 	);
 };
