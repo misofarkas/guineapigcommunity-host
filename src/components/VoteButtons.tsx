@@ -16,7 +16,8 @@ const VoteButtons = ({
 	isDownvoted: boolean;
 }) => {
 	const cookies = useContext(CookieContext);
-	const [voteType, setVoteType] = useState<string | null>(() => {
+	const [localVoteCount, setLocalVoteCount] = useState(voteCount);
+	const [localVoteType, setLocalVoteType] = useState<string | null>(() => {
 		if (isUpvoted) return 'upvote';
 		if (isDownvoted) return 'downvote';
 		return null;
@@ -37,8 +38,12 @@ const VoteButtons = ({
 			),
 		onSuccess: (data, variables) => {
 			const voteType = variables;
-			data.ok && setVoteType(voteType);
-			console.log('add vote data.ok: ', data.ok, variables);
+			if (data.ok) {
+				setLocalVoteType(voteType);
+				voteType === 'upvote'
+					? setLocalVoteCount(localVoteCount + (localVoteType ? 2 : 1))
+					: setLocalVoteCount(localVoteCount - (localVoteType ? 2 : 1));
+			}
 		}
 	});
 
@@ -56,8 +61,12 @@ const VoteButtons = ({
 				}
 			),
 		onSuccess: data => {
-			data.ok && setVoteType(null);
-			console.log('remove vote data.ok: ', data.ok);
+			if (data.ok) {
+				setLocalVoteType(null);
+				localVoteType === 'upvote'
+					? setLocalVoteCount(localVoteCount - 1)
+					: setLocalVoteCount(localVoteCount + 1);
+			}
 		}
 	});
 
@@ -65,7 +74,7 @@ const VoteButtons = ({
 		<div className="flex items-center space-x-1">
 			<button
 				onClick={() => {
-					if (voteType === 'upvote') {
+					if (localVoteType === 'upvote') {
 						deleteVoteMutation.mutate();
 					} else {
 						setVoteMutation.mutate('upvote');
@@ -74,14 +83,14 @@ const VoteButtons = ({
 			>
 				<FaArrowUp
 					className={`h-4 w-4 transition ease-in-out hover:text-primary-accent ${
-						voteType === 'upvote' && 'text-upvote'
+						localVoteType === 'upvote' && 'text-upvote'
 					}`}
 				/>
 			</button>
-			<span>{voteCount}</span>
+			<span>{localVoteCount}</span>
 			<button
 				onClick={() => {
-					if (voteType === 'downvote') {
+					if (localVoteType === 'downvote') {
 						deleteVoteMutation.mutate();
 					} else {
 						setVoteMutation.mutate('downvote');
@@ -90,7 +99,7 @@ const VoteButtons = ({
 			>
 				<FaArrowDown
 					className={`h-4 w-4 transition ease-in-out hover:text-secondary-accent ${
-						voteType === 'downvote' && 'text-downvote'
+						localVoteType === 'downvote' && 'text-downvote'
 					}`}
 				/>
 			</button>

@@ -6,43 +6,26 @@ import { useContext } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import {
-	type CommentFormSchema,
-	type CommentWithReplies,
-	type Post
-} from '@/utils/types';
+import { type CommentFormSchema } from '@/utils/types';
 import { CookieContext } from '@/app/Providers';
 import { commentFormSchema } from '@/server/zod-schema';
 
-// const convertCommentWithRepliesToComment = (
-// 	post: Post,
-// 	commentWithReplies: CommentWithReplies
-// ) => {
-// 	const entity = {
-// 		...commentWithReplies,
-// 		comment: { ...commentWithReplies, user: post.createdBy },
-// 		post,
-// 		user: { ...post.createdBy, name: post.createdBy.name }
-// 	};
-// 	return toCommentZod(entity);
-// };
-
 const Reply = ({
-	post,
-	comment,
+	postId,
+	commentId,
 	onHide
 }: {
-	post: Post;
-	comment?: CommentWithReplies;
+	postId: number;
+	commentId?: number;
 	onHide: () => void;
 }) => {
 	const cookies = useContext(CookieContext);
 
 	const addCommentMutation = useMutation({
-		mutationFn: async (post: CommentFormSchema) =>
+		mutationFn: async (comment: CommentFormSchema) =>
 			await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/comments`, {
 				method: 'POST',
-				body: JSON.stringify(post),
+				body: JSON.stringify(comment),
 				credentials: 'include',
 				headers: {
 					cookie: cookies
@@ -60,7 +43,8 @@ const Reply = ({
 		resolver: zodResolver(commentFormSchema),
 		defaultValues: {
 			text: '',
-			parentPost: post
+			parentPostId: postId,
+			parentCommentId: commentId ?? null
 		}
 	});
 
@@ -76,7 +60,7 @@ const Reply = ({
 				<textarea
 					rows={4}
 					{...methods.register('text')}
-					className="flex w-full items-center gap-1 rounded border border-divider bg-secondary-bg p-2 px-4 py-2 text-white"
+					className="flex w-full items-center gap-1 rounded border border-divider bg-secondary-bg p-2 px-4 py-2"
 					placeholder="Write a reply..."
 				/>
 				{methods.formState.errors.text && (

@@ -43,7 +43,7 @@ const PostPreview = ({ post }: { post: MasterPost }) => {
 						</div>
 					)}
 				</Link>
-				<div className="space-x-2 space-y-2">
+				<div className="mt-2 space-x-2 space-y-2">
 					{post.tags?.map(tag => (
 						<Tag key={tag} tagName={tag} />
 					))}
@@ -54,7 +54,7 @@ const PostPreview = ({ post }: { post: MasterPost }) => {
 				<div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-x-12">
 					<VoteButtons
 						postId={post.id}
-						voteCount={123}
+						voteCount={post.voteCount}
 						isUpvoted={post.isUpvoted}
 						isDownvoted={post.isDownvoted}
 					/>

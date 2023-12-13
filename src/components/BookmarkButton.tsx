@@ -33,7 +33,6 @@ const BookmarkButton = ({
 			),
 		onSuccess: data => {
 			data.ok && setIsBookmarked(true);
-			console.log('add data.ok: ', data.ok);
 		}
 	});
 
@@ -52,7 +51,6 @@ const BookmarkButton = ({
 			),
 		onSuccess: data => {
 			data.ok && setIsBookmarked(false);
-			console.log('remove data.ok: ', data.ok);
 		}
 	});
 

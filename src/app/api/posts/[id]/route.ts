@@ -50,6 +50,10 @@ export const GET = async (
 	_: Request,
 	{ params }: { params: { id: string } }
 ) => {
+	const session = await getServerAuthSession();
+	const createdByIdString = session?.user.id;
+	const createdById = createdByIdString ? +createdByIdString : -1;
+
 	const post = await db.post.findFirst({
 		where: {
 			id: +params.id
@@ -74,7 +78,9 @@ export const GET = async (
 		throw NotFound();
 	}
 
-	return Response.json(postDetailSchema.parse(toPostDetailZod(post)));
+	return Response.json(
+		postDetailSchema.parse(toPostDetailZod(post, createdById))
+	);
 };
 
 export const DELETE = async (

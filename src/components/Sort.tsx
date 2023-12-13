@@ -18,7 +18,11 @@ const Sort = ({
 						? 'bg-primary-accent'
 						: 'hover:bg-primary-bg'
 				}`}
-				onClick={() => updateQueryParams('sort', 'new', true)}
+				onClick={() =>
+					searchParams.has('sort', 'new')
+						? updateQueryParams('sort', '', true)
+						: updateQueryParams('sort', 'new', true)
+				}
 			>
 				New
 			</button>
@@ -28,7 +32,11 @@ const Sort = ({
 						? 'bg-primary-accent'
 						: 'hover:bg-primary-bg'
 				}`}
-				onClick={() => updateQueryParams('sort', 'popular', true)}
+				onClick={() =>
+					searchParams.has('sort', 'popular')
+						? updateQueryParams('sort', '', true)
+						: updateQueryParams('sort', 'popular', true)
+				}
 			>
 				Popular
 			</button>

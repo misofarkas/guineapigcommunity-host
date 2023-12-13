@@ -14,19 +14,19 @@ const config: Config = {
 					'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
 			},
 			colors: {
-				'primary-bg': '#1A1A1B',
-				'secondary-bg': '#2A2A2B',
-				'primary-text': '#D7DADC',
-				'secondary-text': '#818384',
-				'primary-accent': '#FF4500',
-				'secondary-accent': '#0079D3',
-				'divider': '#343536',
-				'hover-bg': '#48494B',
-				'active': '#CC3700',
-				'error': '#EA0027',
-				'success': '28A745',
-				'upvote': '#FF8B60',
-				'downvote': '#9494FF'
+				'primary-bg': '#FFEFDE', // Creamy Peach
+				'secondary-bg': '#FFF4E6', // Off White Peach
+				'primary-text': '#4B3832', // Dark Brown
+				'secondary-text': '#854442', // Soft Brown
+				'primary-accent': '#E6A57E', // Soft Coral
+				'secondary-accent': '#FAD2B2', // Pastel Blue
+				'divider': '#D3C1BC', // Light Grayish Brown
+				'hover-bg': '#FAD2B2', // Light Coral
+				'active': '#FFB482', // Peachy Orange
+				'error': '#FF6B6B', // Soft Red
+				'success': '#77DD77', // Pastel Green
+				'upvote': '#F9B5AC', // Soft Pink
+				'downvote': '#AEC6CF' // Pastel Blue (same as secondary-accent)
 			}
 		}
 	},

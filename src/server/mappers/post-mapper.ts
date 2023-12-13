@@ -19,17 +19,20 @@ import { type PostMasterPrisma } from '@/server/types';
 
 import vote_type = $Enums.vote_type;
 
-export const toPostsMasterZod = (posts: PostMasterPrisma[]) =>
+export const toPostsMasterZod = (posts: PostMasterPrisma[], userId: number) =>
 	posts.map(post => {
 		const votes = post.vote_post;
-		const vote = votes.length > 0 ? votes[0] : null;
+		const userVote = votes.find(v => v.created_by === userId);
+		const upvoters = votes.filter(v => v.type === vote_type.upvote);
+		const downvoters = votes.filter(v => v.type === vote_type.downvote);
 
 		return {
 			...toPostZod(post),
 			isBookmarked: post.bookmark.length > 0,
-			isUpvoted: vote?.type === vote_type.upvote,
-			isDownvoted: vote?.type === vote_type.downvote,
-			commentsCount: post.comment.length
+			isUpvoted: userVote?.type === vote_type.upvote,
+			isDownvoted: userVote?.type === vote_type.downvote,
+			commentsCount: post.comment.length,
+			voteCount: upvoters.length - downvoters.length
 		};
 	});
 
@@ -43,17 +46,22 @@ export const toPostDetailZod = (
 		user: user;
 		comment: ({ user: user; vote_comment: vote_comment[] } & comment)[];
 		vote_post: ({ user: user } & vote_post)[];
-	} & post
+	} & post,
+	userId: number
 ) => {
-	const upvoters = entity.vote_post
+	const votes = entity.vote_post;
+	const userVote = votes.find(v => v.created_by === userId);
+	const upvoters = votes
 		.filter(v => v.type === vote_type.upvote)
 		.map(v => v.user);
-	const downvoters = entity.vote_post
+	const downvoters = votes
 		.filter(v => v.type === vote_type.downvote)
 		.map(v => v.user);
 
 	return {
 		...toPostZod(entity),
+		isUpvoted: userVote?.type === vote_type.upvote,
+		isDownvoted: userVote?.type === vote_type.downvote,
 		comments: toCommentsZodWithParentCommentId(entity.comment),
 		upvoters,
 		downvoters

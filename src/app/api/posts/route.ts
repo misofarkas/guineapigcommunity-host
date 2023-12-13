@@ -64,16 +64,12 @@ export const GET = async (request: NextRequest) => {
 					created_by: createdById
 				}
 			},
-			vote_post: {
-				where: {
-					created_by: createdById
-				}
-			}
+			vote_post: true
 		}
 	});
 
 	return Response.json(
-		postMasterSchema.array().parse(toPostsMasterZod(entities))
+		postMasterSchema.array().parse(toPostsMasterZod(entities, createdById))
 	);
 };
 

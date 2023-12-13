@@ -2,8 +2,6 @@ import { FaRegUser } from 'react-icons/fa';
 import { type Metadata } from 'next';
 
 import { getServerAuthSession } from '@/server/auth';
-import { AppendCookies } from '@/utils/appendCookiesServer';
-import { userSchema } from '@/server/zod-schema';
 import { type User } from '@/utils/types';
 import UserSettings from '@/components/UserSettings';
 import Unauthorized from '@/components/Unauthorized';
@@ -48,7 +46,6 @@ const UserProfile = async ({ params }: { params: { id: string } }) => {
 						</h1>
 						<p className="text-secondary-text">{user.email}</p>
 					</div>
-					{/* TODO fix authorized user only edit*/}
 					{String(user.id) === String(userSession?.user.id) && (
 						<div>
 							<UserSettings user={user} />

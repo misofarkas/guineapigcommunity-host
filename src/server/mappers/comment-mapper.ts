@@ -63,6 +63,6 @@ export const toCommentPrisma = (
 ) => ({
 	text: comment.text,
 	created_by: createdById,
-	parent_post_id: comment.parentPost.id,
-	parent_comment_id: comment.parentComment?.id
+	parent_post_id: comment.parentPostId,
+	parent_comment_id: comment.parentCommentId
 });
