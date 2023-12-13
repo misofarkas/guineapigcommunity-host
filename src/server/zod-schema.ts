@@ -37,7 +37,8 @@ export const postMasterSchema = postSchema.extend({
 	isBookmarked: z.boolean(),
 	isUpvoted: z.boolean(),
 	isDownvoted: z.boolean(),
-	commentsCount: z.number()
+	commentsCount: z.number(),
+	voteCount: z.number()
 });
 
 export const postSchemaWithoutUser = postSchema.omit({
@@ -59,8 +60,8 @@ export const commentSchema = commentSchemaWithoutParents.extend({
 
 export const commentFormSchema = z.object({
 	text: z.string().min(1, { message: 'Please share something...' }),
-	parentPost: postSchema,
-	parentComment: commentSchema.nullable().optional()
+	parentPostId: z.number(),
+	parentCommentId: z.number().nullable()
 });
 
 export const commentSchemaWithParentCommentId =
@@ -72,7 +73,9 @@ export const commentSchemaWithParentCommentId =
 export const postDetailSchema = postSchema.extend({
 	comments: z.array(commentSchemaWithParentCommentId),
 	upvoters: userSchema.array(),
-	downvoters: userSchema.array()
+	downvoters: userSchema.array(),
+	isUpvoted: z.boolean(),
+	isDownvoted: z.boolean()
 });
 
 export const bookmarkSchema = z.object({

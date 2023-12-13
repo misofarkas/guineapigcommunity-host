@@ -19,15 +19,14 @@ const PostSquished = ({
 	<div className="bg-primary-b w-full border border-divider p-2 xl:min-w-[1200px]">
 		<div className="flex items-center gap-4">
 			<div className="hidden flex-col items-center border-r border-divider bg-primary-bg py-4 pl-2 pr-4 sm:flex">
-				{/* TODO post vote count */}
-				<p className="font-semibold text-primary-accent">{123}</p>
+				<p className="font-semibold text-primary-accent">{post.voteCount}</p>
 				<p className="text-secondary-text">votes</p>
 			</div>
 
 			<div className="flex flex-col items-center gap-4">
 				<div className="flex gap-1 sm:hidden">
 					<p className="inline-block font-semibold text-primary-accent">
-						{123}
+						{post.voteCount}
 					</p>
 					<p className="text-secondary-text">votes</p>
 				</div>

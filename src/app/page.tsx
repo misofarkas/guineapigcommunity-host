@@ -5,15 +5,15 @@ import PostPreview from '@/components/PostPreview';
 import PostSkeleton from '@/components/PostSkeleton';
 import RightSidebar from '@/components/RightSidebar';
 import { getPosts } from '@/utils/getPosts';
+import { sortPosts } from '@/utils/sortPosts';
 
 const Home = async ({
 	searchParams
 }: {
 	searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-	// TODO sort posts
-
 	const posts = await getPosts(searchParams);
+	sortPosts(posts, searchParams);
 
 	return (
 		<div className="flex min-h-screen flex-col-reverse lg:flex-row">
