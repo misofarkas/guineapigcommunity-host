@@ -9,7 +9,7 @@ const NavBarLink = ({
 }) => (
 	<div>
 		<Link href={linkTo}>
-			<button className="w-full rounded-xl bg-transparent px-4 py-3 text-center text-primary-text transition ease-in-out hover:bg-secondary-accent focus:border-primary-accent focus:outline-none">
+			<button className="w-full rounded-xl bg-transparent px-4 py-3 text-center text-primary-text transition ease-in-out hover:bg-primary-bg focus:border-primary-accent focus:outline-none">
 				{linkName}
 			</button>
 		</Link>

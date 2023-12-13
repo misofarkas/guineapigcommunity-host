@@ -14,8 +14,8 @@ const config: Config = {
 					'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
 			},
 			colors: {
-				'primary-bg': '#FFEFDE', // Creamy Peach
-				'secondary-bg': '#FFF4E6', // Off White Peach
+				'primary-bg': '#FFF0E0', // Creamy Peach
+				'secondary-bg': '#FFDAB9', // Off White Peach
 				'primary-text': '#4B3832', // Dark Brown
 				'secondary-text': '#854442', // Soft Brown
 				'primary-accent': '#E6A57E', // Soft Coral
