@@ -14,6 +14,9 @@ export const getPost = async (id: string) => {
 			cache: 'no-store'
 		}
 	);
+	if (!res.ok) {
+		return null;
+	}
 	const data = await res.json();
 	return postDetailSchema.parse(data);
 };

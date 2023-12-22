@@ -50,7 +50,7 @@ const PostForm = ({ prefilledPost }: { prefilledPost?: Post }) => {
 				}
 			),
 		onSuccess: () => {
-			router.push(`/post/${prefilledPost?.id}`);
+			router.push('/');
 		}
 	});
 

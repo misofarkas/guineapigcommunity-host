@@ -12,6 +12,7 @@ export const generateMetadata = async ({
 	params: { id: string };
 }) => {
 	const post = await getPost(params.id);
+	if (!post) return null;
 	return {
 		title: post.title,
 		createdBy: post.createdBy.name,
@@ -42,12 +43,18 @@ const PostPage = async ({ params }: { params: { id: string } }) => {
 
 	return (
 		<div className="min-h-screen flex-1 bg-primary-bg px-12">
-			<Post post={post} />
-			<div className="mt-4 flex flex-col gap-4 py-8">
-				{commentsToTree(post.comments).map(comment => (
-					<Comment key={comment.id} parentPost={post} comment={comment} />
-				))}
-			</div>
+			{!post ? (
+				<p className="text-xl font-bold">post could not be found</p>
+			) : (
+				<>
+					<Post post={post} />
+					<div className="mt-4 flex flex-col gap-4 py-8">
+						{commentsToTree(post.comments).map(comment => (
+							<Comment key={comment.id} parentPost={post} comment={comment} />
+						))}
+					</div>
+				</>
+			)}
 		</div>
 	);
 };

@@ -38,7 +38,7 @@ const ConfirmDeleteDialog = ({ postId }: { postId: number }) => {
 			<div
 				className={
 					isOpen
-						? 'fixed inset-0 z-50 bg-secondary-bg bg-opacity-75 transition ease-in-out'
+						? 'fixed inset-0 z-50 bg-gray-700 bg-opacity-75 transition ease-in-out'
 						: ''
 				}
 			>

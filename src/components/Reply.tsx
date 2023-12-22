@@ -33,9 +33,10 @@ const Reply = ({
 						.join('; ')
 				}
 			}),
-		onSuccess: () => {
+		onSuccess: data => {
 			onHide();
-			router.push('/');
+			// router.push('/');
+			data.ok && window.location.reload();
 		}
 	});
 
