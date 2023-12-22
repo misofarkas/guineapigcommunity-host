@@ -17,6 +17,28 @@ export const contentType = 'image/png';
 const Image = async ({ params }: { params: { id: string } }) => {
 	const post = await getPost(params.id);
 
+	if (post === null) {
+		return new ImageResponse(
+			(
+				<div
+					style={{
+						fontSize: 42,
+						background: 'white',
+						width: '100%',
+						height: '100%',
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'center',
+						flexDirection: 'column',
+						padding: 64
+					}}
+				>
+					Post with id {params.id} not found
+				</div>
+			)
+		);
+	}
+
 	return new ImageResponse(
 		(
 			<div
